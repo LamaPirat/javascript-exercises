@@ -1,19 +1,19 @@
 const findTheOldest = function (array) {
-  let preAge = 0;
-  let oldest = "Carly";
-
-  for (i = 0; i < array.length; i++) {
-    let death = array[i].yearOfDeath;
-    let birth = array[i].yearOfBirth;
-    let age = death - birth;
-    if (age > preAge) {
-      preAge = age;
-      oldest = String(array[i].name);
-    }
-  }
-  console.log(oldest);
-  return oldest;
+  return array.reduce((oldest, currentPerson) => {
+    const oldestAge = getAge(oldest.yearOfBirth, oldest.yearOfDeath);
+    const currentAge = getAge(
+      currentPerson.yearOfBirth,
+      currentPerson.yearOfDeath
+    );
+    return oldestAge < currentAge ? currentPerson : oldest;
+  });
 };
 
-// Do not edit below this line
+const getAge = function (birth, death) {
+  if (!death) {
+    death = new Date().getFullYear();
+  }
+  return death - birth;
+};
+
 module.exports = findTheOldest;
